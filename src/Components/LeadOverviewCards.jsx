@@ -1,16 +1,33 @@
-import { Users, FolderOpen, BadgeCheck } from "lucide-react";
+import { Users, FolderOpen, BadgeCheck, AlertCircle } from "lucide-react";
+import useFetch from "../useFetch";
 
 export default function LeadOverViewCards() {
+  const {
+    data: leads,
+    loading,
+    error,
+  } = useFetch("https://zervia-crm-apis.vercel.app/leads");
+
+  console.log(leads);
+
   const iconComponents = {
     Users: Users,
     FolderOpen: FolderOpen,
     BadgeCheck: BadgeCheck,
   };
 
+  const totalLeads = leads ? leads.length : 0;
+  const openLeads = leads
+    ? leads.filter((lead) => lead.status !== "Closed").length
+    : 0;
+  const closedLeads = leads
+    ? leads.filter((lead) => lead.status === "Closed").length
+    : 0;
+
   const cardData = [
     {
       name: "Total Leads",
-      count: 43,
+      count: totalLeads,
       icon: "Users",
       borderColor: "border-primary",
       backgroundColor: "bg-info-subtle",
@@ -19,7 +36,7 @@ export default function LeadOverViewCards() {
     },
     {
       name: "Open Leads",
-      count: 28,
+      count: openLeads,
       icon: "FolderOpen",
       borderColor: "",
       backgroundColor: "",
@@ -32,7 +49,7 @@ export default function LeadOverViewCards() {
     },
     {
       name: "Closed Leads",
-      count: 15,
+      count: closedLeads,
       icon: "BadgeCheck",
       borderColor: "border-success",
       backgroundColor: "bg-success-subtle",
@@ -90,16 +107,46 @@ export default function LeadOverViewCards() {
                             >
                               {card.name}
                             </h4>
-                            <h1
-                              className={`mb-0 fw-bold ${
-                                !isCustomColor ? card.textColor : ""
-                              }`}
-                              style={
-                                isCustomColor ? { color: card.textColor } : {}
-                              }
-                            >
-                              {card.count}
-                            </h1>
+                            {error ? (
+                              <div className="d-flex align-items-center justify-content-end">
+                                <AlertCircle
+                                  size={32}
+                                  className={
+                                    !isCustomColor ? card.textColor : ""
+                                  }
+                                  style={
+                                    isCustomColor
+                                      ? { color: card.textColor }
+                                      : {}
+                                  }
+                                />
+                              </div>
+                            ) : loading ? (
+                              <div
+                                className={`spinner-border ${
+                                  !isCustomColor ? card.textColor : ""
+                                }`}
+                                style={
+                                  isCustomColor ? { color: card.textColor } : {}
+                                }
+                                role="status"
+                              >
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </div>
+                            ) : (
+                              <h1
+                                className={`mb-0 fw-bold ${
+                                  !isCustomColor ? card.textColor : ""
+                                }`}
+                                style={
+                                  isCustomColor ? { color: card.textColor } : {}
+                                }
+                              >
+                                {card.count}
+                              </h1>
+                            )}
                           </div>
                         </div>
                       </div>
