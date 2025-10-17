@@ -8,8 +8,6 @@ export default function LeadOverViewCards() {
     error,
   } = useFetch("https://zervia-crm-apis.vercel.app/leads");
 
-  console.log(leads);
-
   const iconComponents = {
     Users: Users,
     FolderOpen: FolderOpen,
