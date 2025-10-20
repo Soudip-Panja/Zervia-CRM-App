@@ -5,7 +5,6 @@ export default function LeadList() {
   const { data, loading, error } = useFetch(
     "https://zervia-crm-apis.vercel.app/leads"
   );
-  console.log(data);
   return (
     <>
       <div className="container">
