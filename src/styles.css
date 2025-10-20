@@ -1,0 +1,6 @@
+.salesAgent-heading {
+  background: linear-gradient(135deg, #0b86dd 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
