@@ -6,6 +6,28 @@ export default function SalesAgents() {
   const { data, loading, error } = useFetch(
     "https://zervia-crm-apis.vercel.app/sales-agents"
   );
+
+  const getInitials = (name) => {
+    if (!name) return "A";
+    const names = name.trim().split(" ");
+    if (names.length === 1) {
+      return names[0].charAt(0).toUpperCase();
+    }
+    return (
+      names[0].charAt(0) + names[names.length - 1].charAt(0)
+    ).toUpperCase();
+  };
+
+  const bootstrapColors = [
+    "primary",
+    "danger",
+    "success",
+    "warning",
+    "info",
+    "secondary",
+    "dark",
+  ];
+
   console.log(data);
 
   if (loading) {
@@ -70,7 +92,7 @@ export default function SalesAgents() {
             </p>
           </div>
 
-          <div className="col-12 col-md-4 text-md-end g-3">
+          <div className="col-12 col-md-6 text-md-end g-3">
             <button className="btn btn-primary btn-lg shadow w-100 w-md-auto">
               <span className="me-2">
                 <UserRoundPlus color="#ffffff" />
@@ -78,6 +100,48 @@ export default function SalesAgents() {
               Create Sales Agent
             </button>
           </div>
+        </div>
+      </div>
+
+      <div className="container">
+        <div className="row g-4">
+          {data &&
+            data.length > 0 &&
+            data.map((agent, index) => {
+              const colorClass =
+                bootstrapColors[index % bootstrapColors.length];
+              return (
+                <div
+                  className="col-12 col-md-6 col-lg-4 col-xl-3"
+                  key={agent.id || index}
+                >
+                  <div
+                    className={`card h-100 shadow-sm border-${colorClass} border-3 hover-card`}
+                  >
+                    <div className="card-body text-center p-4">
+                      <div className="mb-3">
+                        <div
+                          className={`rounded-circle bg-${colorClass} d-inline-flex align-items-center justify-content-center`}
+                          style={{ width: "100px", height: "100px" }}
+                        >
+                          <span className="text-white fw-bold fs-1">
+                            {getInitials(agent.name)}
+                          </span>
+                        </div>
+                      </div>
+                      <h5 className="card-title fw-bold mb-3">
+                        {agent.name || "N/A"}
+                      </h5>
+
+                      <div className={`alert alert-${colorClass}`} role="alert">
+                        {agent.email}
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </>
