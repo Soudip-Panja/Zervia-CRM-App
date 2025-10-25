@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import App from './App.jsx'
 import Leads from './Pages/Leads.jsx';
 import SalesAgents from './Pages/SalesAgents.jsx';
+import Reports from './Pages/Reports.jsx';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/salesAgent",
     element: <SalesAgents />
+  },
+  {
+    path: "/reports",
+    element: <Reports />
   }
 ])
 
