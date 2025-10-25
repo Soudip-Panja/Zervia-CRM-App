@@ -5,7 +5,7 @@ import { AlertCircle } from "lucide-react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function LeadsPieChart() {
+export default function LeadsDistributionPieChart() {
   const { data, loading, error } = useFetch(
     "https://zervia-crm-apis.vercel.app/leads"
   );
@@ -34,11 +34,11 @@ export default function LeadsPieChart() {
           label: "Leads by Status",
           data: Object.values(statusCount),
           backgroundColor: [
-            "rgba(54, 162, 235, 0.8)",
-            "rgba(255, 206, 86, 0.8)",
-            "rgba(75, 192, 192, 0.8)",
-            "rgba(153, 102, 255, 0.8)",
-            "rgba(255, 99, 132, 0.8)",
+            "rgba(54, 162, 235, 0.8)", 
+            "rgba(255, 206, 86, 0.8)", 
+            "rgba(75, 192, 192, 0.8)", 
+            "rgba(153, 102, 255, 0.8)", 
+            "rgba(255, 99, 132, 0.8)", 
           ],
           borderColor: [
             "rgba(54, 162, 235, 1)",
@@ -53,6 +53,8 @@ export default function LeadsPieChart() {
     };
   };
 
+  const chartData = getChartData();
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -64,6 +66,26 @@ export default function LeadsPieChart() {
           font: {
             size: 12,
           },
+          generateLabels: function(chart) {
+            const data = chart.data;
+            if (data.labels.length && data.datasets.length) {
+              return data.labels.map((label, i) => {
+                const meta = chart.getDatasetMeta(0);
+                const style = meta.controller.getStyle(i);
+                const value = data.datasets[0].data[i];
+                
+                return {
+                  text: `${label}: ${value}`,
+                  fillStyle: style.backgroundColor,
+                  strokeStyle: style.borderColor,
+                  lineWidth: style.borderWidth,
+                  hidden: false,
+                  index: i
+                };
+              });
+            }
+            return [];
+          }
         },
       },
       tooltip: {
@@ -77,16 +99,15 @@ export default function LeadsPieChart() {
           },
         },
       },
+      
     },
   };
-
-  const chartData = getChartData();
 
   return (
     <>
       <div className="card container">
         <div className="card-body">
-          <h3 className="card-title mb-3">Leads Status Distribution</h3>
+          <h3 className="card-title mb-3 text-center">Leads Status Distribution</h3>
           <hr />
 
           {loading && (
@@ -136,30 +157,10 @@ export default function LeadsPieChart() {
           )}
 
           {!loading && !error && chartData && (
-            <div className="row">
+            <div className="row py-4">
               <div className="col-12 col-lg-8 mx-auto">
                 <div style={{ height: "400px", position: "relative" }}>
                   <Pie data={chartData} options={chartOptions} />
-                </div>
-              </div>
-
-              {/* Summary Cards */}
-              <div className="col-12 mt-4">
-                <div className="row g-3">
-                  {chartData.labels.map((status, index) => (
-                    <div className="col-6 col-md-4 col-lg-2" key={status}>
-                      <div className="card text-center border-0 shadow-sm">
-                        <div className="card-body py-3">
-                          <h6 className="card-subtitle mb-2 text-muted small">
-                            {status}
-                          </h6>
-                          <h4 className="card-title mb-0 fw-bold">
-                            {chartData.datasets[0].data[index]}
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
