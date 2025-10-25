@@ -34,11 +34,11 @@ export default function LeadsDistributionPieChart() {
           label: "Leads by Status",
           data: Object.values(statusCount),
           backgroundColor: [
-            "rgba(54, 162, 235, 0.8)", 
-            "rgba(255, 206, 86, 0.8)", 
-            "rgba(75, 192, 192, 0.8)", 
-            "rgba(153, 102, 255, 0.8)", 
-            "rgba(255, 99, 132, 0.8)", 
+            "rgba(54, 162, 235, 0.8)",
+            "rgba(255, 206, 86, 0.8)",
+            "rgba(75, 192, 192, 0.8)",
+            "rgba(153, 102, 255, 0.8)",
+            "rgba(255, 99, 132, 0.8)",
           ],
           borderColor: [
             "rgba(54, 162, 235, 1)",
@@ -63,29 +63,32 @@ export default function LeadsDistributionPieChart() {
         position: "right",
         labels: {
           padding: 15,
+          boxWidth: 25,
+          boxHeight: 25,
           font: {
-            size: 12,
+            size: 16,
+            weight: "bold",
           },
-          generateLabels: function(chart) {
+          generateLabels: function (chart) {
             const data = chart.data;
             if (data.labels.length && data.datasets.length) {
               return data.labels.map((label, i) => {
                 const meta = chart.getDatasetMeta(0);
                 const style = meta.controller.getStyle(i);
                 const value = data.datasets[0].data[i];
-                
+
                 return {
                   text: `${label}: ${value}`,
                   fillStyle: style.backgroundColor,
                   strokeStyle: style.borderColor,
                   lineWidth: style.borderWidth,
                   hidden: false,
-                  index: i
+                  index: i,
                 };
               });
             }
             return [];
-          }
+          },
         },
       },
       tooltip: {
@@ -99,7 +102,6 @@ export default function LeadsDistributionPieChart() {
           },
         },
       },
-      
     },
   };
 
@@ -107,7 +109,9 @@ export default function LeadsDistributionPieChart() {
     <>
       <div className="card container">
         <div className="card-body">
-          <h3 className="card-title mb-3 text-center">Leads Status Distribution</h3>
+          <h3 className="card-title mb-3 text-center">
+            Leads Status Distribution
+          </h3>
           <hr />
 
           {loading && (
