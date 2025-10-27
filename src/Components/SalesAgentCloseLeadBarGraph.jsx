@@ -154,7 +154,7 @@ export default function SalesAgentCloseLeadBarGraph() {
 
   return (
     <>
-      <div className="card container shadow p-3 mb-5 bg-body-tertiary rounded">
+      <div className="card container shadow p-3 mb-5 bg-body-tertiary rounded hover-card">
         <div className="card-body">
           <h3 className="card-title mb-3 text-center">
             Leads Closed by Sales Agent

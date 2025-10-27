@@ -107,7 +107,7 @@ export default function LeadsDistributionPieChart() {
 
   return (
     <>
-      <div className="card container">
+      <div className="card container shadow p-3 mb-5 bg-body-tertiary rounded hover-card">
         <div className="card-body">
           <h3 className="card-title mb-3 text-center">
             Leads Status Distribution
@@ -162,7 +162,7 @@ export default function LeadsDistributionPieChart() {
 
           {!loading && !error && chartData && (
             <div className="row py-4">
-              <div className="col-12 col-lg-8 mx-auto">
+              <div className="col-12">
                 <div style={{ height: "400px", position: "relative" }}>
                   <Pie data={chartData} options={chartOptions} />
                 </div>
