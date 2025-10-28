@@ -1,6 +1,11 @@
+import { useState } from "react";
+import { User, BadgeQuestionMark } from "lucide-react";
 import Profile from "../Components/Profile";
+import About from "../Components/About";
 
 export default function Settings() {
+  const [activeTab, setActiveTab] = useState("profile");
+
   return (
     <>
       <div className="container py-5">
@@ -16,7 +21,7 @@ export default function Settings() {
             }}
           >
             <img
-              src="https://shorturl.at/oLPQF"
+              src="https://rb.gy/a2n1al"
               alt="Profile Avatar"
               className="rounded-circle border border-3 border-light shadow position-absolute start-50 translate-middle"
               width="180"
@@ -28,12 +33,46 @@ export default function Settings() {
               }}
             />
           </div>
+
           <div className="card-body text-center mt-5">
-            <h3 className="mt-5">Soudip Panja</h3>
-            <p className="text-muted">soudip03panja@gmail.com</p>
+            <h3 className="mt-5">Zervia CRM Settings</h3>
+
+            <ul className="nav nav-underline justify-content-center gap-4">
+              <li className="nav-item">
+                <button
+                  className={`nav-link d-flex align-items-center gap-1 fw-semibold ${
+                    activeTab === "profile"
+                      ? "active text-primary"
+                      : "text-secondary"
+                  }`}
+                  onClick={() => setActiveTab("profile")}
+                  style={{ background: "none", border: "none" }}
+                >
+                  <User size={25} />
+                  Profile
+                </button>
+              </li>
+
+              <li className="nav-item">
+                <button
+                  className={`nav-link d-flex align-items-center gap-1 fw-semibold ${
+                    activeTab === "about"
+                      ? "active text-primary"
+                      : "text-secondary"
+                  }`}
+                  onClick={() => setActiveTab("about")}
+                  style={{ background: "none", border: "none" }}
+                >
+                  <BadgeQuestionMark size={25} />
+                  About
+                </button>
+              </li>
+            </ul>
+
             <hr />
 
-            <Profile />
+            {activeTab === "profile" && <Profile />}
+            {activeTab === "about" && <About />}
           </div>
         </div>
       </div>
