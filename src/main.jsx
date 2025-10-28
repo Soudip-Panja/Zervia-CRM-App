@@ -7,8 +7,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import App from './App.jsx'
 import Leads from './Pages/Leads.jsx';
+import LeadDetails from './Pages/LeadDetails.jsx';
 import SalesAgents from './Pages/SalesAgents.jsx';
 import Reports from './Pages/Reports.jsx';
+import Settings from './Pages/Settings.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,12 +22,20 @@ const router = createBrowserRouter([
     element: <Leads />
   },
   {
+    path: "/leads/:leadId",
+    element: <LeadDetails />
+  },
+  {
     path: "/salesAgent",
     element: <SalesAgents />
   },
   {
     path: "/reports",
     element: <Reports />
+  },
+  {
+    path: "/settings",
+    element: <Settings />
   }
 ])
 
