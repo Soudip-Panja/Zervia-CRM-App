@@ -35,7 +35,8 @@ export default function AddSalesAgentForm() {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to save data.");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to save data.");
       }
 
       setIsSubmitting(false);
@@ -43,14 +44,12 @@ export default function AddSalesAgentForm() {
       setName("");
       setEmail("");
 
-
       setTimeout(() => {
         navigate("/salesAgent");
       }, 5000);
     } catch (error) {
       setIsSubmitting(false);
-      alert("Failed to save data. Please try again.");
-      console.error(error);
+      alert(error.message); 
     }
   };
 
@@ -73,7 +72,10 @@ export default function AddSalesAgentForm() {
               <h3 className="card-title text-center">Add New Sales Agent</h3>
 
               {showSuccess && (
-                <div className="alert alert-success d-flex align-items-center mt-3" role="alert">
+                <div
+                  className="alert alert-success d-flex align-items-center mt-3"
+                  role="alert"
+                >
                   <BadgeCheck size={24} className="me-2" />
                   <div>Sales Agent added successfully! Redirecting...</div>
                 </div>
@@ -109,8 +111,8 @@ export default function AddSalesAgentForm() {
                 </div>
 
                 <div className="text-center">
-                  <button 
-                    className="btn btn-primary" 
+                  <button
+                    className="btn btn-primary"
                     disabled={isSubmitting || showSuccess}
                   >
                     {isSubmitting ? "Saving data..." : "Submit"}
