@@ -50,6 +50,7 @@ export default function AddSalesAgentForm() {
     } catch (error) {
       setIsSubmitting(false);
       alert(error.message); 
+      console.error(error);
     }
   };
 
@@ -57,70 +58,86 @@ export default function AddSalesAgentForm() {
     <>
       <div className="container py-5 px-5">
         <div>
-          <div
-            className="card shadow p-3 mb-5 bg-body-tertiary rounded"
-            style={{ maxWidth: "650px", margin: "0 auto", marginTop: "150px" }}
-          >
-            <div className="card-body">
-              <div className="text-end">
-                <Link to="/salesAgent">
-                  <button className="btn btn-outline-danger">
-                    <X size={20} strokeWidth={4} />
-                  </button>
-                </Link>
+          {!showSuccess ? (
+            <div
+              className="card shadow p-3 mb-5 bg-body-tertiary rounded"
+              style={{
+                maxWidth: "650px",
+                margin: "0 auto",
+                marginTop: "150px",
+              }}
+            >
+              <div className="card-body">
+                <div className="text-end">
+                  <Link to="/salesAgent">
+                    <button className="btn btn-outline-danger">
+                      <X size={20} strokeWidth={4} />
+                    </button>
+                  </Link>
+                </div>
+                <h3 className="card-title text-center">Add New Sales Agent</h3>
+
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <label htmlFor="name">Full Name</label>
+                    <input
+                      id="name"
+                      type="text"
+                      placeholder="Enter Sales Agent name"
+                      className="form-control"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      id="email"
+                      type="text"
+                      placeholder="Enter Sales Agent email"
+                      className="form-control"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  <div className="text-center">
+                    <button className="btn btn-primary" disabled={isSubmitting}>
+                      {isSubmitting ? "Saving data..." : "Submit"}
+                    </button>
+                  </div>
+                </form>
               </div>
-              <h3 className="card-title text-center">Add New Sales Agent</h3>
-
-              {showSuccess && (
-                <div
-                  className="alert alert-success d-flex align-items-center mt-3"
-                  role="alert"
-                >
-                  <BadgeCheck size={24} className="me-2" />
-                  <div>Sales Agent added successfully! Redirecting...</div>
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="name">Full Name</label>
-                  <input
-                    id="name"
-                    type="text"
-                    placeholder="Enter Sales Agent name"
-                    className="form-control"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    disabled={isSubmitting || showSuccess}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    id="email"
-                    type="text"
-                    placeholder="Enter Sales Agent email"
-                    className="form-control"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={isSubmitting || showSuccess}
-                  />
-                </div>
-
-                <div className="text-center">
-                  <button
-                    className="btn btn-primary"
-                    disabled={isSubmitting || showSuccess}
-                  >
-                    {isSubmitting ? "Saving data..." : "Submit"}
-                  </button>
-                </div>
-              </form>
             </div>
-          </div>
+          ) : (
+            /* Success Modal Popup */
+            <div
+              className="modal show d-block"
+              tabIndex="-1"
+              style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-body text-center py-5">
+                    <div className="mb-3">
+                      <BadgeCheck size={64} className="text-success" />
+                    </div>
+                    <h4 className="mb-3">Success!</h4>
+                    <p className="text-muted">
+                      Sales Agent added successfully!
+                      <br />
+                      Redirecting in a moment...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
