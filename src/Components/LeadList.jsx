@@ -1,5 +1,6 @@
 import { AlertCircle, Eye, Edit } from "lucide-react";
 import useFetch from "../useFetch";
+import AddLeadAndFilter from "./AddLeadAndFilter";
 
 export default function LeadList() {
   const { data, loading, error } = useFetch(
@@ -11,6 +12,7 @@ export default function LeadList() {
         <div className="card container">
           <div className="card-body">
             <h1>Lead List</h1>
+            <AddLeadAndFilter />
             <hr />
             <div>
               {loading && (
