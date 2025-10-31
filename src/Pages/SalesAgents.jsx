@@ -1,5 +1,6 @@
 import useFetch from "../useFetch";
 import { AlertCircle, UserRoundPlus } from "lucide-react";
+import { Link } from "react-router-dom";
 import "../styles.css";
 
 export default function SalesAgents() {
@@ -93,12 +94,14 @@ export default function SalesAgents() {
           </div>
 
           <div className="col-12 col-md-6 text-md-end g-3">
-            <button className="btn btn-primary btn-lg shadow w-100 w-md-auto">
-              <span className="me-2">
-                <UserRoundPlus color="#ffffff" />
-              </span>
-              Create Sales Agent
-            </button>
+            <Link to="/addSalesAgent">
+              <button className="btn btn-primary btn-lg shadow w-100 w-md-auto">
+                <span className="me-2">
+                  <UserRoundPlus color="#ffffff" />
+                </span>
+                Create Sales Agent
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -136,7 +139,6 @@ export default function SalesAgents() {
                       <div className={`alert alert-${colorClass}`} role="alert">
                         {agent.email}
                       </div>
-
                     </div>
                   </div>
                 </div>

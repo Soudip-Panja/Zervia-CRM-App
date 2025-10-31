@@ -12,6 +12,8 @@ import SalesAgents from './Pages/SalesAgents.jsx';
 import Reports from './Pages/Reports.jsx';
 import Settings from './Pages/Settings.jsx';
 
+import AddSalesAgentForm from './Components/AddSalesAgentForm.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <Settings />
+  },
+  {
+    path: "/addSalesAgent",
+    element: <AddSalesAgentForm />
   }
 ])
 
