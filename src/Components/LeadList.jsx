@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { AlertCircle, Eye, Edit, Trash2 } from "lucide-react";
 import useFetch from "../useFetch";
 import AddLeadAndFilter from "./AddLeadAndFilter";
@@ -6,14 +7,49 @@ export default function LeadList() {
   const { data, loading, error } = useFetch(
     "https://zervia-crm-apis.vercel.app/leads"
   );
+
+  const [filteredLeads, setFilteredLeads] = useState([]);
+  const [statusFilter, setStatusFilter] = useState("");
+  const [agentFilter, setAgentFilter] = useState("");
+
+  useEffect(() => {
+    if (!data) return;
+
+    let filtered = [...data];
+
+    if (statusFilter) {
+      filtered = filtered.filter((lead) => lead.status === statusFilter);
+    }
+
+    if (agentFilter) {
+      filtered = filtered.filter(
+        (lead) => lead.salesAgent?._id === agentFilter
+      );
+    }
+
+    setFilteredLeads(filtered);
+  }, [data, statusFilter, agentFilter]);
+
+  const handleClearFilters = () => {
+    setStatusFilter("");
+    setAgentFilter("");
+  };
+
   return (
     <>
       <div className="container">
         <div className="card container">
           <div className="card-body">
             <h1>Lead List</h1>
-            <AddLeadAndFilter />
+            <AddLeadAndFilter
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+              agentFilter={agentFilter}
+              setAgentFilter={setAgentFilter}
+              handleClearFilters={handleClearFilters}
+            />
             <hr />
+
             <div>
               {loading && (
                 <div className="text-center">
@@ -31,9 +67,9 @@ export default function LeadList() {
                   <p className="mt-2 text-danger">Error Loading Leads...</p>
                 </div>
               )}
-              {!loading && !error && data.length > 0 && (
+
+              {!loading && !error && filteredLeads.length > 0 && (
                 <div>
-                  {/* For Desktop view */}
                   <div className="d-none d-lg-block">
                     <table className="table">
                       <thead className="table-dark">
@@ -49,13 +85,13 @@ export default function LeadList() {
                         </tr>
                       </thead>
                       <tbody className="table-group-divider">
-                        {data.map((lead, index) => (
+                        {filteredLeads.map((lead, index) => (
                           <tr className="text-center" key={lead._id || index}>
                             <th scope="row">{index + 1}</th>
                             <td>{lead.name || "N/A"}</td>
                             <td>{lead.source || "N/A"}</td>
                             <td>{lead.status || "N/A"}</td>
-                            <td>{lead.salesAgent.name || "N/A"}</td>
+                            <td>{lead.salesAgent?.name || "N/A"}</td>
                             <td>
                               <span
                                 className={`badge ${
@@ -66,7 +102,7 @@ export default function LeadList() {
                                     : "text-bg-success"
                                 }`}
                               >
-                                {lead.priority.toUpperCase()}
+                                {lead.priority?.toUpperCase() || "N/A"}
                               </span>
                             </td>
                             <td>{lead.timeToClose}</td>
@@ -100,7 +136,7 @@ export default function LeadList() {
 
                   {/* For Mobile View */}
                   <div className="d-lg-none">
-                    {data.map((lead, index) => (
+                    {filteredLeads.map((lead, index) => (
                       <div
                         key={lead._id || index}
                         className="card mb-3 shadow-sm"
@@ -188,6 +224,12 @@ export default function LeadList() {
                     ))}
                   </div>
                 </div>
+              )}
+
+              {!loading && !error && filteredLeads.length === 0 && (
+                <p className="text-center text-muted mt-3">
+                  No leads found for selected filters.
+                </p>
               )}
             </div>
           </div>
