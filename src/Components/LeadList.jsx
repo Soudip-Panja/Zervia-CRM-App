@@ -1,4 +1,4 @@
-import { AlertCircle, Eye, Edit } from "lucide-react";
+import { AlertCircle, Eye, Edit, Trash2 } from "lucide-react";
 import useFetch from "../useFetch";
 import AddLeadAndFilter from "./AddLeadAndFilter";
 
@@ -84,6 +84,12 @@ export default function LeadList() {
                                 >
                                   <Edit size={16} />
                                 </button>
+                                <button
+                                  className="btn btn-sm btn-danger px-3"
+                                  title="Delete"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
                               </div>
                             </td>
                           </tr>
@@ -167,6 +173,12 @@ export default function LeadList() {
                                   title="Edit"
                                 >
                                   <Edit size={16} /> Edit
+                                </button>
+                                <button
+                                  className="btn btn-sm btn-danger flex-fill"
+                                  title="Delete"
+                                >
+                                  <Trash2 size={16} /> Delete
                                 </button>
                               </div>
                             </div>
