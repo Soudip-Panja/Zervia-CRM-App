@@ -57,7 +57,9 @@ export default function AddLeadAndFilter({
                     onChange={(e) => setStatusFilter(e.target.value)}
                     disabled={agentFilter !== ""}
                   >
-                    <option value="">Filter by Status</option>
+                    <option value="" disabled>
+                      Filter by Status
+                    </option>
                     {statusOptions.map((status, index) => (
                       <option key={index} value={status}>
                         {status}
@@ -76,7 +78,7 @@ export default function AddLeadAndFilter({
                     onChange={(e) => setAgentFilter(e.target.value)}
                     disabled={loading || statusFilter !== ""}
                   >
-                    <option value="">
+                    <option value="" disabled>
                       {loading ? "Loading..." : "Filter by Sales Agent"}
                     </option>
                     {error && <option disabled>Error loading agents</option>}

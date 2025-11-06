@@ -1,34 +1,38 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { AlertCircle, Eye, Edit, Trash2 } from "lucide-react";
 import useFetch from "../useFetch";
 import AddLeadAndFilter from "./AddLeadAndFilter";
 
 export default function LeadList() {
-  const { data, loading, error } = useFetch(
-    "https://zervia-crm-apis.vercel.app/leads"
-  );
-
-  const [filteredLeads, setFilteredLeads] = useState([]);
-  const [statusFilter, setStatusFilter] = useState("");
-  const [agentFilter, setAgentFilter] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [statusFilter, setStatusFilter] = useState(searchParams.get("status") || "");
+  const [agentFilter, setAgentFilter] = useState(searchParams.get("salesAgent") || "");
 
   useEffect(() => {
-    if (!data) return;
+    const params = {};
+    if (statusFilter) params.status = statusFilter;
+    if (agentFilter) params.salesAgent = agentFilter;
+    setSearchParams(params);
+  }, [statusFilter, agentFilter, setSearchParams]);
 
-    let filtered = [...data];
+  let apiUrl = "https://zervia-crm-apis.vercel.app/leads";
+  const params = new URLSearchParams();
+  
+  if (statusFilter) {
+    params.append("status", statusFilter);
+  }
+  
+  if (agentFilter) {
+    params.append("salesAgent", agentFilter);
+  }
+  
+  const queryString = params.toString();
+  if (queryString) {
+    apiUrl = `${apiUrl}?${queryString}`;
+  }
 
-    if (statusFilter) {
-      filtered = filtered.filter((lead) => lead.status === statusFilter);
-    }
-
-    if (agentFilter) {
-      filtered = filtered.filter(
-        (lead) => lead.salesAgent?._id === agentFilter
-      );
-    }
-
-    setFilteredLeads(filtered);
-  }, [data, statusFilter, agentFilter]);
+  const { data, loading, error } = useFetch(apiUrl);
 
   const handleClearFilters = () => {
     setStatusFilter("");
@@ -68,7 +72,7 @@ export default function LeadList() {
                 </div>
               )}
 
-              {!loading && !error && filteredLeads.length > 0 && (
+              {!loading && !error && data && data.length > 0 && (
                 <div>
                   <div className="d-none d-lg-block">
                     <table className="table">
@@ -85,7 +89,7 @@ export default function LeadList() {
                         </tr>
                       </thead>
                       <tbody className="table-group-divider">
-                        {filteredLeads.map((lead, index) => (
+                        {data.map((lead, index) => (
                           <tr className="text-center" key={lead._id || index}>
                             <th scope="row">{index + 1}</th>
                             <td>{lead.name || "N/A"}</td>
@@ -136,7 +140,7 @@ export default function LeadList() {
 
                   {/* For Mobile View */}
                   <div className="d-lg-none">
-                    {filteredLeads.map((lead, index) => (
+                    {data.map((lead, index) => (
                       <div
                         key={lead._id || index}
                         className="card mb-3 shadow-sm"
@@ -226,7 +230,7 @@ export default function LeadList() {
                 </div>
               )}
 
-              {!loading && !error && filteredLeads.length === 0 && (
+              {!loading && !error && (!data || data.length === 0) && (
                 <p className="text-center text-muted mt-3">
                   No leads found for selected filters.
                 </p>
