@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { X, BadgeCheck } from "lucide-react";
+import { X, BadgeCheck, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import useFetch from "../useFetch";
 
@@ -131,26 +131,41 @@ export default function AddLeadForm() {
 
                   <div className="mb-3">
                     <label htmlFor="salesAgent">Sales Agent:</label>
-                    <select
-                      id="salesAgent"
-                      className={`form-select ${
-                        !source ? "text-secondary" : ""
-                      }`}
-                      value={salesAgent}
-                      onChange={(e) => setSalesAgent(e.target.value)}
-                      required
-                      disabled={isSubmitting}
-                    >
-                      <option value="" disabled>
-                        Assign Sales Agent
-                      </option>
-                      {data &&
-                        data.map((agent) => (
-                          <option key={agent._id} value={agent._id}>
-                            {agent.name}
-                          </option>
-                        ))}
-                    </select>
+                    {error ? (
+                      <div className="d-flex align-items-center text-danger gap-2 border rounded p-2">
+                        <AlertCircle size={20} />
+                        <span>Failed to load Sales Agents</span>
+                      </div>
+                    ) : loading ? (
+                      <div className="d-flex align-items-center gap-2">
+                        <div
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                        ></div>
+                        <span>Loading agents...</span>
+                      </div>
+                    ) : (
+                      <select
+                        id="salesAgent"
+                        className={`form-select ${
+                          !salesAgent ? "text-secondary" : ""
+                        }`}
+                        value={salesAgent}
+                        onChange={(e) => setSalesAgent(e.target.value)}
+                        required
+                        disabled={isSubmitting}
+                      >
+                        <option value="" disabled>
+                          Assign Sales Agent
+                        </option>
+                        {data &&
+                          data.map((agent) => (
+                            <option key={agent._id} value={agent._id}>
+                              {agent.name}
+                            </option>
+                          ))}
+                      </select>
+                    )}
                   </div>
 
                   <div className="mb-3">
@@ -158,7 +173,7 @@ export default function AddLeadForm() {
                     <select
                       id="status"
                       className={`form-select ${
-                        !source ? "text-secondary" : ""
+                        !status ? "text-secondary" : ""
                       }`}
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
@@ -209,7 +224,7 @@ export default function AddLeadForm() {
                     <select
                       id="priority"
                       className={`form-select ${
-                        !source ? "text-secondary" : ""
+                        !priority ? "text-secondary" : ""
                       }`}
                       value={priority}
                       onChange={(e) => setPriority(e.target.value)}
@@ -226,10 +241,22 @@ export default function AddLeadForm() {
                   </div>
 
                   <button
-                    className="btn btn-primary w-100"
+                    className="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Saving..." : "Add Lead"}
+                    {isSubmitting ? (
+                      <>
+                        <div
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                        Saving Data...
+                      </>
+                    ) : (
+                      "Add Lead"
+                    )}
                   </button>
                 </form>
               </div>

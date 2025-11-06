@@ -88,7 +88,7 @@ export default function Profile() {
                   role="status"
                   style={{ width: "20px", height: "20px" }}
                 >
-                  <span class="visually-hidden">Loading...</span>
+                  <span className="visually-hidden">Loading...</span>
                 </div>
                 <p className="mb-0 mt-1  fw-semibold">Status</p>
                 <p className="mb-0">Active</p>
