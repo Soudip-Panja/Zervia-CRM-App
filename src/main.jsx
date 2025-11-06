@@ -13,6 +13,7 @@ import Reports from './Pages/Reports.jsx';
 import Settings from './Pages/Settings.jsx';
 
 import AddSalesAgentForm from './Components/AddSalesAgentForm.jsx';
+import AddLeadForm from './Components/AddLeadForm.jsx';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/addSalesAgent",
     element: <AddSalesAgentForm />
+  },
+  {
+    path: "/addLeads",
+    element: <AddLeadForm />
   }
 ])
 

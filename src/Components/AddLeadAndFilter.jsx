@@ -1,5 +1,6 @@
 import useFetch from "../useFetch";
 import { FilePlus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function AddLeadAndFilter({
   statusFilter,
@@ -36,17 +37,22 @@ export default function AddLeadAndFilter({
         <div className="card-body">
           <div className="row align-items-center g-3">
             <div className="col-md-4">
-              <button className="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
-                <FilePlus size={20} />
-                Add Lead
-              </button>
+              <Link to="/addLeads">
+                <button className="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                  <FilePlus size={20} />
+                  Add Lead
+                </button>
+              </Link>
             </div>
             <div className="col-md-8">
               <div className="row g-2 align-items-center">
                 <div className="col-sm-5">
                   <select
                     id="statusFilter"
-                    className={getFilterClass(agentFilter !== "", statusFilter !== "")}
+                    className={getFilterClass(
+                      agentFilter !== "",
+                      statusFilter !== ""
+                    )}
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
                     disabled={agentFilter !== ""}
@@ -62,7 +68,10 @@ export default function AddLeadAndFilter({
                 <div className="col-sm-5">
                   <select
                     id="agentFilter"
-                    className={getFilterClass(statusFilter !== "", agentFilter !== "")}
+                    className={getFilterClass(
+                      statusFilter !== "",
+                      agentFilter !== ""
+                    )}
                     value={agentFilter}
                     onChange={(e) => setAgentFilter(e.target.value)}
                     disabled={loading || statusFilter !== ""}
