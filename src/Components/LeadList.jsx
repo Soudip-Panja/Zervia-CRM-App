@@ -6,8 +6,12 @@ import AddLeadAndFilter from "./AddLeadAndFilter";
 
 export default function LeadList() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [statusFilter, setStatusFilter] = useState(searchParams.get("status") || "");
-  const [agentFilter, setAgentFilter] = useState(searchParams.get("salesAgent") || "");
+  const [statusFilter, setStatusFilter] = useState(
+    searchParams.get("status") || ""
+  );
+  const [agentFilter, setAgentFilter] = useState(
+    searchParams.get("salesAgent") || ""
+  );
 
   useEffect(() => {
     const params = {};
@@ -18,15 +22,15 @@ export default function LeadList() {
 
   let apiUrl = "https://zervia-crm-apis.vercel.app/leads";
   const params = new URLSearchParams();
-  
+
   if (statusFilter) {
     params.append("status", statusFilter);
   }
-  
+
   if (agentFilter) {
     params.append("salesAgent", agentFilter);
   }
-  
+
   const queryString = params.toString();
   if (queryString) {
     apiUrl = `${apiUrl}?${queryString}`;
@@ -37,6 +41,29 @@ export default function LeadList() {
   const handleClearFilters = () => {
     setStatusFilter("");
     setAgentFilter("");
+  };
+
+
+  const handleDelete = async (leadId) => {
+    if (!window.confirm("Are you sure you want to delete this lead?")) return;
+
+    try {
+      const response = await fetch(
+        `https://zervia-crm-apis.vercel.app/leads/${leadId}`,
+        { method: "DELETE" }
+      );
+
+      if (!response.ok) {
+        alert("Failed to delete lead. Try again.");
+        return;
+      }
+      const updated = data.filter((lead) => lead._id !== leadId);
+      
+      window.location.reload();
+    } catch (error) {
+      alert("Error deleting lead.");
+      console.log(error);
+    }
   };
 
   return (
@@ -127,6 +154,7 @@ export default function LeadList() {
                                 <button
                                   className="btn btn-sm btn-danger px-3"
                                   title="Delete"
+                                  onClick={() => handleDelete(lead._id)}
                                 >
                                   <Trash2 size={16} />
                                 </button>
@@ -217,6 +245,7 @@ export default function LeadList() {
                                 <button
                                   className="btn btn-sm btn-danger flex-fill"
                                   title="Delete"
+                                  onClick={() => handleDelete(lead._id)}
                                 >
                                   <Trash2 size={16} /> Delete
                                 </button>
