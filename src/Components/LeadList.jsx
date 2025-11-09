@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { AlertCircle, Eye, Edit, Trash2 } from "lucide-react";
 import useFetch from "../useFetch";
 import AddLeadAndFilter from "./AddLeadAndFilter";
@@ -139,12 +139,16 @@ export default function LeadList() {
                             <td>{lead.timeToClose}</td>
                             <td>
                               <div className="d-flex gap-2 justify-content-center">
+
+                                <Link to={`/leads/${lead._id}`}>
                                 <button
                                   className="btn btn-sm btn-primary px-3"
                                   title="View"
                                 >
                                   <Eye size={16} />
                                 </button>
+                                </Link>
+
                                 <button
                                   className="btn btn-sm btn-warning px-3"
                                   title="Edit"
