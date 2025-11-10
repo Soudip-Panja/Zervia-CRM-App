@@ -43,7 +43,6 @@ export default function LeadList() {
     setAgentFilter("");
   };
 
-
   const handleDelete = async (leadId) => {
     if (!window.confirm("Are you sure you want to delete this lead?")) return;
 
@@ -58,7 +57,7 @@ export default function LeadList() {
         return;
       }
       const updated = data.filter((lead) => lead._id !== leadId);
-      
+
       window.location.reload();
     } catch (error) {
       alert("Error deleting lead.");
@@ -139,22 +138,21 @@ export default function LeadList() {
                             <td>{lead.timeToClose}</td>
                             <td>
                               <div className="d-flex gap-2 justify-content-center">
-
                                 <Link to={`/leads/${lead._id}`}>
-                                <button
-                                  className="btn btn-sm btn-primary px-3"
-                                  title="View"
-                                >
-                                  <Eye size={16} />
-                                </button>
+                                  <button
+                                    className="btn btn-sm btn-primary px-3"
+                                    title="View"
+                                  >
+                                    <Eye size={16} />
+                                  </button>
                                 </Link>
 
-                                <button
-                                  className="btn btn-sm btn-warning px-3"
-                                  title="Edit"
-                                >
-                                  <Edit size={16} />
-                                </button>
+                                <Link to={`/leads/edit/${lead._id}`}>
+                                  <button className="btn btn-sm btn-warning px-3">
+                                    <Edit size={16} />
+                                  </button>
+                                </Link>
+
                                 <button
                                   className="btn btn-sm btn-danger px-3"
                                   title="Delete"
@@ -233,26 +231,32 @@ export default function LeadList() {
                             </div>
                             <div className="col-12 mt-2">
                               <hr />
-                              <div className="d-flex gap-2">
-                                <button
-                                  className="btn btn-sm btn-primary flex-fill"
-                                  title="View"
-                                >
-                                  <Eye size={16} /> View
-                                </button>
-                                <button
-                                  className="btn btn-sm btn-warning flex-fill"
-                                  title="Edit"
-                                >
-                                  <Edit size={16} /> Edit
-                                </button>
-                                <button
-                                  className="btn btn-sm btn-danger flex-fill"
-                                  title="Delete"
-                                  onClick={() => handleDelete(lead._id)}
-                                >
-                                  <Trash2 size={16} /> Delete
-                                </button>
+
+                              <div className="row g-2">
+                                <div className="col-4">
+                                  <Link to={`/leads/${lead._id}`}>
+                                    <button className="btn btn-sm btn-primary w-100">
+                                      <Eye size={16} /> View
+                                    </button>
+                                  </Link>
+                                </div>
+
+                                <div className="col-4">
+                                  <Link to={`/leads/edit/${lead._id}`}>
+                                    <button className="btn btn-sm btn-warning w-100">
+                                      <Edit size={16} /> Edit
+                                    </button>
+                                  </Link>
+                                </div>
+
+                                <div className="col-4">
+                                  <button
+                                    className="btn btn-sm btn-danger w-100"
+                                    onClick={() => handleDelete(lead._id)}
+                                  >
+                                    <Trash2 size={16} /> Delete
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>

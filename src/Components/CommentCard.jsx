@@ -17,13 +17,16 @@ export default function CommentCard() {
         <div className="card-header bg-primary text-white">
           <h5 className="mb-0">Comments</h5>
         </div>
+        
 
+        {/* Display Comments */}
         <div className="card-body">
           <div className="card h-100">
             <p className="m-0">No comments yet. Be the first to comment!</p>
           </div>
         </div>
 
+        {/* Footer part */}
         <div className="card-footer bg-body-secondary py-4 border-top">
           {agentError ? (
             <div className="d-flex align-items-center text-danger gap-2 border rounded p-2">

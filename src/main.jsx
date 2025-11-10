@@ -8,7 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import App from "./App.jsx";
 import Leads from "./Pages/Leads.jsx";
 import LeadDetails from "./Pages/LeadDetails.jsx";
-import EditLead from "./Pages/EditLead.jsx";
+import EditLead from "./Components/EditLead.jsx"
 import SalesAgents from "./Pages/SalesAgents.jsx";
 import Reports from "./Pages/Reports.jsx";
 import Settings from "./Pages/Settings.jsx";
