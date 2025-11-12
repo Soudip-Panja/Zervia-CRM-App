@@ -1,6 +1,6 @@
 import useFetch from "../useFetch";
 import { AlertCircle, Send, UserStar } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function CommentCard() {
@@ -12,20 +12,37 @@ export default function CommentCard() {
     error: agentError,
   } = useFetch("https://zervia-crm-apis.vercel.app/sales-agents");
 
-  const {
-    data: commentData,
-    loading: commentLoading,
-    error: commentError,
-  } = useFetch(
-    `https://zervia-crm-apis.vercel.app/comments/${leadId}/comments`
-  );
-
-  console.log(commentData);
+  const [commentData, setCommentData] = useState([]);
+  const [commentLoading, setCommentLoading] = useState(true);
+  const [commentError, setCommentError] = useState(null);
 
   const [salesAgent, setSalesAgent] = useState("");
   const [commentText, setCommentText] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
+  const fetchComments = async () => {
+    try {
+      setCommentLoading(true);
+      const response = await fetch(
+        `https://zervia-crm-apis.vercel.app/comments/${leadId}/comments`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch comments");
+      }
+      const data = await response.json();
+      setCommentData(data);
+    } catch (error) {
+      console.error(error);
+      setCommentError(error);
+    } finally {
+      setCommentLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, [leadId]);
 
   const handlePostComment = async () => {
     if (!salesAgent) {
@@ -55,12 +72,10 @@ export default function CommentCard() {
 
       if (!response.ok) {
         const errorData = await response.json();
-
         const msg =
           errorData?.error ||
           errorData?.message ||
           "Failed to post comment. Unknown error.";
-
         alert("❌ " + msg);
         return;
       }
@@ -69,6 +84,8 @@ export default function CommentCard() {
       setCommentText("");
       setSalesAgent("");
       setTimeout(() => setSuccessMsg(""), 3000);
+
+      fetchComments();
     } catch (error) {
       console.log(error);
       setErrorMsg("❌ Error posting comment");
@@ -78,65 +95,70 @@ export default function CommentCard() {
 
   return (
     <>
-      <div className="card h-90">
-        <div className="card-header bg-primary text-white">
+      <div className="card shadow equal-card d-flex flex-column">
+        <div className="card-header bg-success text-white">
           <h5 className="mb-0">Comments</h5>
         </div>
 
-        {/* Display Comments */}
-        <div className="card-body">
+        <div className="card-body p-4 flex-grow-1 overflow-auto">
           {commentLoading && (
-            <div className="container mt-5">
+            <div
+              className="d-flex flex-column justify-content-center align-items-center text-center"
+              style={{ minHeight: "100%" }}
+            >
               <div
-                className="d-flex flex-column justify-content-center align-items-center"
-                style={{ minHeight: "400px" }}
+                className="spinner-border text-success mb-3"
+                role="status"
+                style={{ width: "3rem", height: "3rem" }}
               >
-                <div
-                  className="spinner-border text-primary mb-3"
-                  role="status"
-                  style={{ width: "3rem", height: "3rem" }}
-                >
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-                <div
-                  className="alert alert-info text-center py-2 px-3"
-                  role="alert"
-                  style={{ maxWidth: "300px" }}
-                >
-                  <span className="small fw-medium">
-                    Loading Lead Comments.....
-                  </span>
-                </div>
+                <span className="visually-hidden">Loading...</span>
+              </div>
+
+              <div
+                className="alert alert-success text-center py-2 px-3"
+                role="alert"
+                style={{ maxWidth: "300px" }}
+              >
+                <span className="small fw-medium text-success">
+                  Loading Lead Comments.....
+                </span>
               </div>
             </div>
           )}
 
           {commentError && (
-            <div className="container mt-5">
+            <div
+              className="d-flex flex-column justify-content-center align-items-center text-center"
+              style={{ minHeight: "100%" }}
+            >
+              <AlertCircle className="text-danger mb-3" size={48} />
               <div
-                className="d-flex flex-column justify-content-center align-items-center"
-                style={{ minHeight: "400px" }}
+                className="alert alert-danger text-center py-2 px-3"
+                role="alert"
+                style={{ maxWidth: "300px" }}
               >
-                <AlertCircle className="text-danger mb-3" size={48} />
-                <div
-                  className="alert alert-danger text-center py-2 px-3"
-                  role="alert"
-                  style={{ maxWidth: "300px" }}
-                >
-                  <span className="small fw-medium">
-                    Error Loading Comments: {error.message || "Unknown error"}
-                  </span>
-                </div>
+                <span className="small fw-medium">
+                  Error Loading Comments...
+                </span>
               </div>
             </div>
           )}
 
-          {!commentLoading && !commentError && commentData && (
+          {!commentLoading && !commentError && commentData.length === 0 && (
+            <div
+              className="d-flex flex-column justify-content-center align-items-center text-muted"
+              style={{ minHeight: "100%" }}
+            >
+              <p className="fs-6">No comments yet.</p>
+            </div>
+          )}
+
+          {!commentLoading && !commentError && commentData.length > 0 && (
             <div>
               {commentData.map((comment) => (
                 <div
                   key={comment._id}
-                  className="shadow hover-card p-3 mb-3 bg-body-tertiary rounded border rounded p-2 mb-2"
+                  className="shadow p-3 mb-3 bg-body-tertiary rounded border"
                 >
                   <div className="d-flex justify-content-between align-items-center">
                     <strong className="d-flex align-items-center gap-1">
@@ -207,12 +229,13 @@ export default function CommentCard() {
             ></textarea>
 
             <button
-              className="btn btn-primary d-flex justify-content-center align-items-center"
+              className="btn btn-success d-flex justify-content-center align-items-center"
               onClick={handlePostComment}
             >
               <Send />
             </button>
           </div>
+
           <div>
             {successMsg && <p className="text-success mt-2">{successMsg}</p>}
             {errorMsg && <p className="text-danger mt-2">{errorMsg}</p>}

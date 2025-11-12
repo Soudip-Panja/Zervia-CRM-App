@@ -10,16 +10,16 @@ export default function LeadDetails() {
         <div className="card">
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <h1>Lead Details</h1>
-              <Link to="/leads" className="btn btn-secondary">
+              <h1 className="leadDetails-heading">Lead Details</h1>
+              <Link to="/leads" className="btn btn-primary">
                 <ArrowLeft size={16} className="me-1" />
                 Back to List
               </Link>
             </div>
             <hr />
 
-            <div className="row">
-              <div className="col-md-6">
+            <div className="row py-4">
+              <div className="col-md-6 mb-4 mb-md-0">
                 <LeadDetailsCard />
               </div>
 

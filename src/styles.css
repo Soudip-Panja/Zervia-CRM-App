@@ -4,6 +4,12 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.leadDetails-heading {
+  background: linear-gradient(135deg, #0536aa 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 .hover-card {
   transition: all 0.3s ease;
   cursor: pointer;
@@ -12,3 +18,24 @@
   transform: translateY(-8px);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
+
+
+
+.equal-card {
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+}
+
+.equal-card .card-body {
+  overflow-y: auto; 
+}
+
+.equal-card::-webkit-scrollbar {
+  width: 6px;
+}
+.equal-card::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 10px;
+}
+
