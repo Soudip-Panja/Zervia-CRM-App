@@ -25,10 +25,10 @@ export default function ClosedLeadDoughnutChart() {
     }
 
     return {
-      labels: ["Closed Leads", "Other Leads"],
+      labels: ["Closed", "Other"],
       datasets: [
         {
-          label: "Closed Leads vs Total Leads",
+          label: "Closed vs Total",
           data: [closed, others],
           backgroundColor: [
             "rgba(255, 99, 132, 0.8)",

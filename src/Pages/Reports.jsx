@@ -5,11 +5,12 @@ import Header from "../Components/Header";
 export default function Reports() {
   return (
     <>
-    <Header />
+      <Header />
       <div className="container my-5">
-        <h1 className="display-5 fw-bold text-primary all-heading">Reports Overview</h1>
+        <h1 className="display-5 fw-bold text-primary all-heading">
+          Reports Overview
+        </h1>
         <hr />
-        <SalesAgentCloseLeadBarGraph />
         <div className="row">
           <div className="col-md-6">
             <LeadsDistributionPieChart />
@@ -18,6 +19,7 @@ export default function Reports() {
             <ClosedLeadDoughnutChart />
           </div>
         </div>
+        <SalesAgentCloseLeadBarGraph />
       </div>
     </>
   );
