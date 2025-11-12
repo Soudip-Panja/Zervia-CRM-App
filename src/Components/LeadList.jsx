@@ -56,7 +56,6 @@ export default function LeadList() {
         alert("Failed to delete lead. Try again.");
         return;
       }
-      const updated = data.filter((lead) => lead._id !== leadId);
 
       window.location.reload();
     } catch (error) {
@@ -67,10 +66,13 @@ export default function LeadList() {
 
   return (
     <>
-      <div className="container" style={{marginBottom: "5rem"}}>
+      <div className="container" style={{ marginBottom: "5rem" }}>
         <div className="card container">
           <div className="card-body">
-            <h1 className="display-5 fw-bold text-primary all-heading">Lead List</h1>
+            <h1 className="display-5 fw-bold text-primary all-heading">
+              Lead List
+            </h1>
+
             <AddLeadAndFilter
               statusFilter={statusFilter}
               setStatusFilter={setStatusFilter}
@@ -78,98 +80,150 @@ export default function LeadList() {
               setAgentFilter={setAgentFilter}
               handleClearFilters={handleClearFilters}
             />
+
             <hr />
 
             <div>
               {loading && (
-                <div className="text-center">
-                  <div className="spinner-border text-danger" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                <div className="container mt-5">
+                  <div
+                    className="d-flex flex-column justify-content-center align-items-center"
+                    style={{ minHeight: "400px" }}
+                  >
+                    <div
+                      className="spinner-border text-primary mb-3"
+                      role="status"
+                      style={{ width: "3rem", height: "3rem" }}
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <div
+                      className="alert alert-info text-center py-2 px-3"
+                      role="alert"
+                      style={{ maxWidth: "300px" }}
+                    >
+                      <span className="small fw-medium">Loading Leads...</span>
+                    </div>
                   </div>
-                  <p className="mt-2 text-danger">Loading Leads...</p>
-                </div>
-              )}
-              {error && (
-                <div className="text-center">
-                  <div className="text-danger">
-                    <AlertCircle />
-                  </div>
-                  <p className="mt-2 text-danger">Error Loading Leads...</p>
                 </div>
               )}
 
+              {error && (
+                <div className="container mt-5">
+                  <div
+                    className="d-flex flex-column justify-content-center align-items-center"
+                    style={{ minHeight: "400px" }}
+                  >
+                    <AlertCircle className="text-danger mb-3" size={48} />
+                    <div
+                      className="alert alert-danger text-center py-2 px-3"
+                      role="alert"
+                      style={{ maxWidth: "300px" }}
+                    >
+                      <span className="small fw-medium">
+                        Error Loading Leads...
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ===================== MAIN LEAD LIST SECTION ===================== */}
               {!loading && !error && data && data.length > 0 && (
                 <div>
+                  {/* ===== DESKTOP VIEW ===== */}
                   <div className="d-none d-lg-block">
-                    <table className="table">
-                      <thead className="table-dark">
-                        <tr className="text-center">
-                          <th scope="col">SNo.</th>
-                          <th scope="col">NAME</th>
-                          <th scope="col">SOURCE</th>
-                          <th scope="col">STATUS</th>
-                          <th scope="col">SALES AGENT</th>
-                          <th scope="col">PRIORITY</th>
-                          <th scope="col">TIME TO CLOSE</th>
-                          <th scope="col">ACTION</th>
-                        </tr>
-                      </thead>
-                      <tbody className="table-group-divider">
-                        {data.map((lead, index) => (
-                          <tr className="text-center" key={lead._id || index}>
-                            <th scope="row">{index + 1}</th>
-                            <td>{lead.name || "N/A"}</td>
-                            <td>{lead.source || "N/A"}</td>
-                            <td>{lead.status || "N/A"}</td>
-                            <td>{lead.salesAgent?.name || "N/A"}</td>
-                            <td>
-                              <span
-                                className={`badge ${
-                                  lead.priority === "High"
-                                    ? "text-bg-danger"
-                                    : lead.priority === "Medium"
-                                    ? "text-bg-primary"
-                                    : "text-bg-success"
-                                }`}
-                              >
-                                {lead.priority?.toUpperCase() || "N/A"}
-                              </span>
-                            </td>
-                            <td>{lead.timeToClose}</td>
-                            <td>
-                              <div className="d-flex gap-2 justify-content-center">
-                                <Link to={`/leads/${lead._id}`}>
-                                  <button
-                                    className="btn btn-sm btn-primary px-3"
-                                    title="View"
-                                  >
-                                    <Eye size={16} />
-                                  </button>
-                                </Link>
-
-                                <Link to={`/leads/edit/${lead._id}`}>
-                                  <button className="btn btn-sm btn-warning px-3">
-                                    <Edit size={16} />
-                                  </button>
-                                </Link>
-
-                                <button
-                                  className="btn btn-sm btn-danger px-3"
-                                  title="Delete"
-                                  onClick={() => handleDelete(lead._id)}
-                                >
-                                  <Trash2 size={16} />
-                                </button>
-                              </div>
-                            </td>
+                    <div
+                      className="table-responsive"
+                      style={{
+                        maxHeight: "500px", // Only ~10 rows visible
+                        overflowY: "auto",
+                      }}
+                    >
+                      <table className="table mb-0">
+                        <thead
+                          className="table-dark"
+                          style={{
+                            position: "sticky",
+                            top: 0,
+                            zIndex: 2,
+                          }}
+                        >
+                          <tr className="text-center">
+                            <th scope="col">SNo.</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">SOURCE</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">SALES AGENT</th>
+                            <th scope="col">PRIORITY</th>
+                            <th scope="col">TIME TO CLOSE</th>
+                            <th scope="col">ACTION</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+
+                        <tbody className="table-group-divider">
+                          {data.map((lead, index) => (
+                            <tr className="text-center" key={lead._id || index}>
+                              <th scope="row">{index + 1}</th>
+                              <td>{lead.name || "N/A"}</td>
+                              <td>{lead.source || "N/A"}</td>
+                              <td>{lead.status || "N/A"}</td>
+                              <td>{lead.salesAgent?.name || "N/A"}</td>
+                              <td>
+                                <span
+                                  className={`badge ${
+                                    lead.priority === "High"
+                                      ? "text-bg-danger"
+                                      : lead.priority === "Medium"
+                                      ? "text-bg-primary"
+                                      : "text-bg-success"
+                                  }`}
+                                >
+                                  {lead.priority?.toUpperCase() || "N/A"}
+                                </span>
+                              </td>
+                              <td>{lead.timeToClose}</td>
+                              <td>
+                                <div className="d-flex gap-2 justify-content-center">
+                                  <Link to={`/leads/${lead._id}`}>
+                                    <button
+                                      className="btn btn-sm btn-primary px-3"
+                                      title="View"
+                                    >
+                                      <Eye size={16} />
+                                    </button>
+                                  </Link>
+
+                                  <Link to={`/leads/edit/${lead._id}`}>
+                                    <button className="btn btn-sm btn-warning px-3">
+                                      <Edit size={16} />
+                                    </button>
+                                  </Link>
+
+                                  <button
+                                    className="btn btn-sm btn-danger px-3"
+                                    title="Delete"
+                                    onClick={() => handleDelete(lead._id)}
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
-                  {/* For Mobile View */}
-                  <div className="d-lg-none">
+                  {/* ===== MOBILE VIEW ===== */}
+                  <div
+                    className="d-lg-none"
+                    style={{
+                      maxHeight: "600px", // Enough to show 3 leads approximately
+                      overflowY: "auto",
+                    }}
+                  >
                     {data.map((lead, index) => (
                       <div
                         key={lead._id || index}
@@ -197,6 +251,7 @@ export default function LeadList() {
                                 </span>
                               </div>
                             </div>
+
                             <div className="col-6">
                               <small className="text-muted d-block">
                                 SOURCE
@@ -223,15 +278,15 @@ export default function LeadList() {
                             </div>
                             <div className="col-6">
                               <small className="text-muted d-block">
-                                TIME TO COLSE
+                                TIME TO CLOSE
                               </small>
                               <span className="fw-semibold">
                                 {lead.timeToClose || "N/A"}
                               </span>
                             </div>
+
                             <div className="col-12 mt-2">
                               <hr />
-
                               <div className="row g-2">
                                 <div className="col-4">
                                   <Link to={`/leads/${lead._id}`}>
@@ -240,7 +295,6 @@ export default function LeadList() {
                                     </button>
                                   </Link>
                                 </div>
-
                                 <div className="col-4">
                                   <Link to={`/leads/edit/${lead._id}`}>
                                     <button className="btn btn-sm btn-warning w-100">
@@ -248,7 +302,6 @@ export default function LeadList() {
                                     </button>
                                   </Link>
                                 </div>
-
                                 <div className="col-4">
                                   <button
                                     className="btn btn-sm btn-danger w-100"

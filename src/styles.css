@@ -1,6 +1,4 @@
-/* ==============================
-   🌈 Headings Gradient Style
-   ============================== */
+/* All Heading Color */
 .all-heading {
   background: linear-gradient(135deg, #0b86dd 0%, #10b981 100%);
   -webkit-background-clip: text;
@@ -8,6 +6,7 @@
   background-clip: text;
 }
 
+/* Header Background Color */
 .header-gradient {
   background: linear-gradient(90deg, #0b86dd 0%, #10b981 50%, #0b86dd 100%);
   color: white;
@@ -43,6 +42,58 @@
 .equal-card::-webkit-scrollbar-thumb {
   background-color: #bbb;
   border-radius: 10px;
+}
+
+/* Leads scrolling (Desktop videw) */
+
+.table-responsive {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #212529 !important;
+  color: white;
+  z-index: 2;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* Leads Scrolling (Movile View) */
+@media (max-width: 992px) {
+  .card.mb-3.shadow-sm {
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+  }
+  .d-lg-none {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+div[style*="overflow-y: auto"]::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+}
+
+div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+div[style*="overflow-y: auto"]::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track {
+  background: #f9f9f9;
 }
 
 /* Side Bar */
