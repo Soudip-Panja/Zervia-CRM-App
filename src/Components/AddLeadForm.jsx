@@ -90,7 +90,7 @@ export default function AddLeadForm() {
                     </button>
                   </Link>
                 </div>
-                <h3 className="card-title text-center">Add New Lead</h3>
+                <h3 className="card-title text-center fw-bold text-primary all-heading">Add New Lead</h3>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="name">Lead Name:</label>

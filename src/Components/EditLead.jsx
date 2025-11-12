@@ -108,7 +108,7 @@ export default function EditLead() {
                 </Link>
               </div>
 
-              <h3 className="card-title text-center">Edit Lead</h3>
+              <h3 className="card-title text-center fw-bold text-primary all-heading">Edit Lead</h3>
 
               {loading && (
                 <div className="text-center py-4">

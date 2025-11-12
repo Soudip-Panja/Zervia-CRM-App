@@ -19,7 +19,7 @@ export default function Settings() {
             className="position-relative"
             style={{
               height: "150px",
-              background: "linear-gradient(180deg, #7F00FF, #1C6EF2)",
+              background: "linear-gradient(180deg, #9a4dff, #4c8efc)"
             }}
           >
             <img

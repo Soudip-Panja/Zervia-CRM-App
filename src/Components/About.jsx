@@ -15,7 +15,7 @@ export default function About() {
               className="d-flex align-items-center justify-content-center rounded-circle me-3"
               style={{
                 width: "50px",
-                height: "50px",
+                height: "48px",
                 backgroundColor: "rgba(255, 255, 255, 0.2)",
                 border: "2px solid rgba(255, 255, 255, 0.3)",
               }}

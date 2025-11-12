@@ -1,6 +1,7 @@
 import { X, BadgeCheck } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Header from "./Header";
 
 export default function AddSalesAgentForm() {
   const [name, setName] = useState("");
@@ -49,13 +50,14 @@ export default function AddSalesAgentForm() {
       }, 5000);
     } catch (error) {
       setIsSubmitting(false);
-      alert(error.message); 
+      alert(error.message);
       console.error(error);
     }
   };
 
   return (
     <>
+      <Header />
       <div className="container py-5 px-5">
         <div>
           {!showSuccess ? (
@@ -64,7 +66,6 @@ export default function AddSalesAgentForm() {
               style={{
                 maxWidth: "650px",
                 margin: "0 auto",
-                marginTop: "150px",
               }}
             >
               <div className="card-body">
@@ -75,7 +76,9 @@ export default function AddSalesAgentForm() {
                     </button>
                   </Link>
                 </div>
-                <h3 className="card-title text-center">Add New Sales Agent</h3>
+                <h3 className="card-title text-center fw-bold text-primary all-heading">
+                  Add New Sales Agent
+                </h3>
 
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">

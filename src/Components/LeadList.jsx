@@ -70,7 +70,7 @@ export default function LeadList() {
       <div className="container" style={{marginBottom: "5rem"}}>
         <div className="card container">
           <div className="card-body">
-            <h1>Lead List</h1>
+            <h1 className="display-5 fw-bold text-primary all-heading">Lead List</h1>
             <AddLeadAndFilter
               statusFilter={statusFilter}
               setStatusFilter={setStatusFilter}
