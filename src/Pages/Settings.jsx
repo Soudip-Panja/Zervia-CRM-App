@@ -2,13 +2,15 @@ import { useState } from "react";
 import { User, BadgeQuestionMark } from "lucide-react";
 import Profile from "../Components/Profile";
 import About from "../Components/About";
+import Header from "../Components/Header";
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("profile");
 
   return (
     <>
-      <div className="container py-5">
+    <Header />
+      <div className="container py-5" style={{marginBottom: "5rem"}}>
         <div
           className="card mx-auto shadow-lg overflow-hidden"
           style={{ borderRadius: "25px" }}

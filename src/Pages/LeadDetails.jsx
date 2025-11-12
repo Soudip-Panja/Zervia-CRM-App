@@ -2,10 +2,12 @@ import LeadDetailsCard from "../Components/LeadDetailsCard";
 import CommentCard from "../Components/CommentCard";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import Header from "../Components/Header";
 
 export default function LeadDetails() {
   return (
     <>
+    <Header />
       <div className="container mt-5">
         <div className="card">
           <div className="card-body">

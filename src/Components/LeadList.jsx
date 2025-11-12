@@ -67,7 +67,7 @@ export default function LeadList() {
 
   return (
     <>
-      <div className="container">
+      <div className="container" style={{marginBottom: "5rem"}}>
         <div className="card container">
           <div className="card-body">
             <h1>Lead List</h1>

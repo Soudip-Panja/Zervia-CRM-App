@@ -2,6 +2,7 @@ import useFetch from "../useFetch";
 import { AlertCircle, UserRoundPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import "../styles.css";
+import Header from "../Components/Header";
 
 export default function SalesAgents() {
   const { data, loading, error } = useFetch(
@@ -79,6 +80,7 @@ export default function SalesAgents() {
 
   return (
     <>
+    <Header />
       <div className="container py-5">
         <div className="row align-items-center">
           <div className="col-md-6">
