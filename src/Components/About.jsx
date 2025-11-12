@@ -10,18 +10,20 @@ export default function About() {
         }}
       >
         <div className="card-body p-5 text-white">
-          <div className="d-flex justify-content-center align-items-center mb-4">
+          <div className="d-flex justify-content-center align-items-center mb-4 flex-wrap text-center">
             <div
               className="d-flex align-items-center justify-content-center rounded-circle me-3"
               style={{
-                width: "50px",
-                height: "48px",
+                width: "3.2rem",
+                aspectRatio: "1 / 1",
                 backgroundColor: "rgba(255, 255, 255, 0.2)",
                 border: "2px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
               }}
             >
-              <CircleAlert size={28} strokeWidth={2} />
+              <CircleAlert size={26} strokeWidth={2} />
             </div>
+
             <h2 className="mb-0 fw-bold">About Zervia CRM App</h2>
           </div>
 
@@ -59,7 +61,7 @@ export default function About() {
             <p className="mb-0 opacity-75">Make data-driven decisions</p>
           </div>
 
-          <div className="d-flex gap-3">
+          <div className="d-flex gap-3 flex-wrap justify-content-center justify-content-md-start">
             <button className="btn btn-light rounded-3 px-4 py-2 fw-semibold">
               Learn More
             </button>
