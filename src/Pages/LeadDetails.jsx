@@ -8,7 +8,7 @@ export default function LeadDetails() {
   return (
     <>
     <Header />
-      <div className="container mt-5">
+      <div className="container mt-5" style={{marginBottom: "5rem"}}>
         <div className="card">
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-center mb-3">

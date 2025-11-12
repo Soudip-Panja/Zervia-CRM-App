@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { X, BadgeCheck, AlertCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import useFetch from "../useFetch";
+import Header from "./Header";
 
 export default function EditLead() {
   const { leadId } = useParams();
@@ -88,6 +89,7 @@ export default function EditLead() {
 
   return (
     <>
+    <Header />
       <div className="container py-5 px-5">
         {!showSuccess ? (
           <div
@@ -95,7 +97,6 @@ export default function EditLead() {
             style={{
               maxWidth: "650px",
               margin: "0 auto",
-              marginTop: "150px",
             }}
           >
             <div className="card-body">

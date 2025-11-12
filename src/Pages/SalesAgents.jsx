@@ -81,6 +81,7 @@ export default function SalesAgents() {
   return (
     <>
     <Header />
+    <div style={{marginBottom: "5rem"}}>
       <div className="container py-5">
         <div className="row align-items-center">
           <div className="col-md-6">
@@ -147,6 +148,7 @@ export default function SalesAgents() {
               );
             })}
         </div>
+      </div>
       </div>
     </>
   );

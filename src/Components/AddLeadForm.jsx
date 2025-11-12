@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { X, BadgeCheck, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import useFetch from "../useFetch";
+import Header from "../Components/Header";
 
 export default function AddLeadForm() {
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ export default function AddLeadForm() {
 
   return (
     <>
+      <Header />
       <div className="container py-5 px-5">
         <div>
           {!showSuccess ? (
@@ -78,7 +80,6 @@ export default function AddLeadForm() {
               style={{
                 maxWidth: "650px",
                 margin: "0 auto",
-                marginTop: "150px",
               }}
             >
               <div className="card-body">
