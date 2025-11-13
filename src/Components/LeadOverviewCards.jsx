@@ -61,7 +61,7 @@ export default function LeadOverViewCards() {
       <div className="container py-5">
         <div className="card container">
           <div className="card-body">
-            <h1 className="mb-3 display-5 fw-bold text-primary all-heading">Leads Overview</h1>
+            <h1 className="mb-3 fw-bold text-primary all-heading">Leads Overview</h1>
             <hr />
 
             <div className="row g-4 mt-2">

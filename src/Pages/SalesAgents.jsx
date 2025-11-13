@@ -37,7 +37,7 @@ export default function SalesAgents() {
         <div className="container py-5">
           <div className="row align-items-center">
             <div className="col-md-6">
-              <h1 className="display-5 fw-bold text-primary all-heading">
+              <h1 className="fw-bold text-primary all-heading">
                 Sales Agents
               </h1>
               <p className="text-muted fs-5 mb-0">

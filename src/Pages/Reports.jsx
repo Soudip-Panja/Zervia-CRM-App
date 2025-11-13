@@ -7,7 +7,7 @@ export default function Reports() {
     <>
       <Header />
       <div className="container my-5">
-        <h1 className="display-5 fw-bold text-primary all-heading">
+        <h1 className="fw-bold text-primary all-heading">
           Reports Overview
         </h1>
         <hr />
